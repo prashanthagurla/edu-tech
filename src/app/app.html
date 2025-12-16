@@ -1,5 +1,17 @@
+<nav class="navbar navbr-expand-sm bg-primary navbar-dark">
+  <ul class="navbr-nav">
+    <li class="nav-item">
+      <a routerLink="students" routerLinkActive="active" class="nav-link">Employee List</a>
+    </li>
+  </ul>
+</nav>
+
 <h1 class="text-center">{{ title() }}</h1>
 <div class="container">
-  <app-student-list></app-student-list>
+  <router-outlet />
 </div>
-<!-- <router-outlet /> -->
+<footer class="footer">
+  <div class="container">
+    <span>All Rights Reserved 2025 @PrashanthAgurla</span>
+  </div>
+</footer>
