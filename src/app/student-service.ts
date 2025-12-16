@@ -8,12 +8,15 @@ import { Student } from './student';
   providedIn: 'root',
 })
 export class StudentService {
-  private baseUrl = 'http://localhost:8081/api/students/get'
+  private baseUrl = 'http://localhost:8081/api/students'
 
     constructor(private http: HttpClient) {}
 
     getStudentsList(): Observable<Student[]>{
-      return this.http.get<Student[]>(this.baseUrl)
+      return this.http.get<Student[]>(`${this.baseUrl}/get`)
+    }
+    createStudent(student: Student): Observable<any>{
+      return this.http.post(`${this.baseUrl}/add`,student)
     }
 
 }

@@ -1,14 +1,16 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {HttpClientModule} from '@angular/common/http'
+import { RouterOutlet, RouterLinkWithHref, RouterLinkActive,RouterModule } from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HttpClientModule],
+  imports: [RouterOutlet, HttpClientModule, RouterLinkWithHref, RouterLinkActive, RouterModule,FormsModule,CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('my-project');
+  protected readonly title = signal('Angular21 Spring-Boot Full-Stack Project');
 }
