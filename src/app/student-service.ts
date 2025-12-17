@@ -19,4 +19,8 @@ export class StudentService {
       return this.http.post(`${this.baseUrl}/add`,student)
     }
 
+    updateStudent(student: Student): Observable<any>{
+      return this.http.put(`${this.baseUrl}/update`,student)
+    }
+
 }
