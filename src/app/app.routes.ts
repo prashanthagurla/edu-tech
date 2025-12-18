@@ -4,10 +4,9 @@ import { CreateStudent } from './create-student/create-student';
 import { UpdateStudent } from './update-student/update-student';
 
 export const routes: Routes = [
-   
-    {path:'students',component: StudentList},
-    {path:'create-student',component: CreateStudent},
-    {path: '',redirectTo: 'students', pathMatch: 'full'},
-    {path:'update-student/:id',component:UpdateStudent}
+  { path: 'students', component: StudentList },
+  { path: 'create-student', component: CreateStudent },
 
+  { path: '', redirectTo: 'students', pathMatch: 'full' },
+  { path: 'update-student/:id', component: UpdateStudent },
 ];
