@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Student } from '../student';
-import { StudentService } from '../student-service';
+import { Student } from '../model/student';
+import { StudentService } from '../service/student-service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
