@@ -9,9 +9,9 @@
             <label class="form-label fs-6">Full Name</label>
             <input
               type="text"
-              value="`${signUpRequest.fullName}`"
               class="form-control form-control-lg"
               placeholder="John Michael"
+              #fullName
             />
           </div>
 
@@ -21,6 +21,7 @@
               type="email"
               class="form-control form-control-lg"
               placeholder="johnmichael@gmail.com"
+              #email
             />
           </div>
 
@@ -30,6 +31,7 @@
               type="password"
               class="form-control form-control-lg"
               placeholder="Enter password"
+              #password
             />
           </div>
 
@@ -39,10 +41,16 @@
               type="password"
               class="form-control form-control-lg"
               placeholder="Confirm password"
+              #confirmPassword
             />
           </div>
 
-          <button class="btn btn-primary btn-lg w-100">Sign Up</button>
+          <button
+            class="btn btn-primary btn-lg w-100"
+            (click)="submit(fullName.value, email.value, password.value, confirmPassword.value)"
+          >
+            Sign Up
+          </button>
 
           <p class="text-center mt-3 fs-6">
             Already have an account?
