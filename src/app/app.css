@@ -1,0 +1,13 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.main-content {
+  padding: 40px 0;
+}
+
+/* Footer stays below content */
+.footer {
+  padding: 12px 0;
+}
