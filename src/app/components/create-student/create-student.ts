@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Student } from '../model/student';
+import { Student } from '../../model/student';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { StudentService } from '../service/student-service';
+import { StudentService } from '../../service/student-service';
 import { Router } from '@angular/router';
 
 @Component({

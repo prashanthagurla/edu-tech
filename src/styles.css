@@ -23,3 +23,13 @@ html, body {
   padding: 12px 0;
   text-align: center;
 }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+

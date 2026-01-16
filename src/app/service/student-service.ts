@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Student } from '../model/student';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentService {
-  private baseUrl = 'http://localhost:8081/api/students';
+  private baseUrl = 'http://localhost:3000/api/students';
 
   constructor(private http: HttpClient) {}
 
   private refresh$ = new BehaviorSubject<void>(undefined);
 
   getStudentsList(): Observable<Student[]> {
-    return this.http.get<Student[]>(`${this.baseUrl}/get`);
+    return this.http
+      .get<{ success: boolean; data: Student[] }>(`${this.baseUrl}/get`)
+      .pipe(map((response) => response.data));
   }
   createStudent(student: Student): Observable<Object> {
     return this.http.post(`${this.baseUrl}/add`, student);
@@ -28,9 +31,10 @@ export class StudentService {
 
     return this.http.delete<string>(`${this.baseUrl}/delete/${id}`);
   }
-  getStudentById(id: Number): Observable<Student> {
-    console.log('im called');
-    return this.http.get<Student>(`${this.baseUrl}/getById/${id}`);
+  getStudentById(id: number): Observable<Student> {
+    return this.http
+      .get<{ success: boolean; data: Student }>(`${this.baseUrl}/get/${id}`)
+      .pipe(map((response) => response.data));
   }
 
   triggerRefresh() {

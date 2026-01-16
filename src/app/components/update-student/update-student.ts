@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Student } from '../model/student';
-import { StudentService } from '../service/student-service';
+import { Student } from '../../model/student';
+import { StudentService } from '../../service/student-service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -29,7 +29,6 @@ export class UpdateStudent implements OnInit {
       next: (data) => {
         console.log('Student fetched:', data);
         this.student = data;
-        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error fetching student', err);

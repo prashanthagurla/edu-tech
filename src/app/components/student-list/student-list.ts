@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe, NgFor } from '@angular/common';
-import { StudentService } from '../service/student-service';
+import { StudentService } from '../../service/student-service';
 import { Router } from '@angular/router';
 
 @Component({

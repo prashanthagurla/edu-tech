@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Practice",
+      "request": "launch",
+      "mainClass": "app.auth.Practice",
+      "projectName": "my-project_e8ec629"
+    },
+    {
       "name": "ng serve",
       "type": "chrome",
       "request": "launch",

@@ -2,6 +2,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>S/N</th>
+      <th>Roll No</th>
       <th>First Name</th>
       <th>Last Name</th>
       <th>Email Id</th>
@@ -11,6 +13,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let student of students$ | async">
+      <td>{{ student.id }}</td>
+      <td>{{ student.rollno }}</td>
       <td>{{ student.firstName }}</td>
       <td>{{ student.lastName }}</td>
       <td>{{ student.emailId }}</td>
