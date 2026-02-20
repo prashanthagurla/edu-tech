@@ -1,7 +1,7 @@
 export class Student {
   id!: number;
-  rollno!: string;
+  rollNo!: string;
   firstName!: string;
   lastName!: string;
-  emailId!: string;
+  email!: string;
 }

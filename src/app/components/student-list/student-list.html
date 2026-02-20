@@ -6,7 +6,7 @@
       <th>Roll No</th>
       <th>First Name</th>
       <th>Last Name</th>
-      <th>Email Id</th>
+      <th>Email</th>
       <th>Actions</th>
       <th>Delete Student</th>
     </tr>
@@ -14,10 +14,10 @@
   <tbody>
     <tr *ngFor="let student of students$ | async">
       <td>{{ student.id }}</td>
-      <td>{{ student.rollno }}</td>
+      <td>{{ student.rollNo }}</td>
       <td>{{ student.firstName }}</td>
       <td>{{ student.lastName }}</td>
-      <td>{{ student.emailId }}</td>
+      <td>{{ student.email }}</td>
       <td>
         <button (click)="updateStudent(student.id)" class="btn btn-info">update</button>
       </td>

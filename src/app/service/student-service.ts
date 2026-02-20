@@ -15,16 +15,16 @@ export class StudentService {
   private refresh$ = new BehaviorSubject<void>(undefined);
 
   getStudentsList(): Observable<Student[]> {
-    return this.http
-      .get<{ success: boolean; data: Student[] }>(`${this.baseUrl}/get`)
-      .pipe(map((response) => response.data));
+    console.log('get all student front end service called');
+
+    return this.http.get<Student[]>(`${this.baseUrl}/get`);
   }
   createStudent(student: Student): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/add`, student);
+    return this.http.post(`${this.baseUrl}/add/student`, student);
   }
 
-  updateStudent(id: Number, student: Student): Observable<Object> {
-    return this.http.put(`${this.baseUrl}/update/${id}`, student);
+  updateStudent(student: Student): Observable<Object> {
+    return this.http.put(`${this.baseUrl}/update`, student);
   }
   deleteStudent(id: Number): Observable<string> {
     console.log('hELLO');
@@ -32,9 +32,7 @@ export class StudentService {
     return this.http.delete<string>(`${this.baseUrl}/delete/${id}`);
   }
   getStudentById(id: number): Observable<Student> {
-    return this.http
-      .get<{ success: boolean; data: Student }>(`${this.baseUrl}/get/${id}`)
-      .pipe(map((response) => response.data));
+    return this.http.get<Student>(`${this.baseUrl}/get/${id}`);
   }
 
   triggerRefresh() {

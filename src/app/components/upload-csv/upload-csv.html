@@ -1,0 +1,102 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Upload CSV to Database</h4>
+        </div>
+
+        <div class="card-body">
+          <!-- File Upload Section -->
+          <div class="mb-3">
+            <label for="csvFile" class="form-label"
+              >Select CSV File<span class="text-danger">*</span></label
+            >
+            <input
+              type="file"
+              class="form-control"
+              id="csvFile"
+              accept=".txt,.csv"
+              (change)="onFileSelected($event)"
+              [disabled]="isUploading"
+            />
+
+            <div class="form-text">
+              <small>
+                <i class="bi bi-info-circle"></i>
+                Selected file: {{ selectedFile ? selectedFile.name : 'No file selected' }}
+              </small>
+            </div>
+          </div>
+
+          <!-- Database Name Input -->
+          <div class="mb-3">
+            <label for="dbName" class="form-label"
+              >Database Name <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="dbName"
+              placeholder="Enter database name"
+              [value]="dbName"
+              (input)="onDbNameChange($event)"
+              [disabled]="isUploading"
+            />
+          </div>
+
+          <!-- Table Name Input -->
+          <div class="mb-3">
+            <label for="tableName" class="form-label"
+              >Table Name <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="tableName"
+              placeholder="Enter table name"
+              [value]="tableName"
+              (input)="onTableNameChange($event)"
+              [disabled]="isUploading"
+            />
+          </div>
+
+          <!-- Alert Messages -->
+          <div
+            *ngIf="uploadMessage"
+            [class]="'alert ' + (uploadSuccess ? 'alert-success' : 'alert-danger')"
+            role="alert"
+          >
+            {{ uploadMessage }}
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="onCancel()"
+              [disabled]="isUploading"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onSubmit()"
+              [disabled]="isUploading"
+            >
+              <span
+                *ngIf="isUploading"
+                class="spinner-border spinner-border-sm me-2"
+                role="status"
+              ></span>
+              {{ isUploading ? 'Uploading...' : 'Upload CSV' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

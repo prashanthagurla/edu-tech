@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StudentService } from '../../service/student-service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-student',
@@ -14,28 +15,46 @@ import { Router } from '@angular/router';
 })
 export class CreateStudent implements OnInit {
   student: Student = new Student();
-  constructor(private studentService: StudentService, private router: Router) {}
+  constructor(
+    private studentService: StudentService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {}
 
   saveStudent() {
+    console.log('save student called');
     this.studentService.createStudent(this.student).subscribe(
-      (data) => {
-        console.log('SUCCESS', data);
-        this.goToStudentList();
+      (res) => {
+        console.log('SUCCESS', res);
+        Swal.fire({
+          icon: 'success',
+          title: 'Student Saved',
+          text: 'Student saved successfully!',
+          timer: 500,
+          showConfirmButton: false,
+        }).then(() => {
+          this.goToStudentList();
+        });
       },
-      (error) => {
-        console.log(error);
-        alert('Student not saved. check backend');
-      }
+      (err) => {
+        console.log('ERROR', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: err.error.message,
+          showConfirmButton: true,
+        });
+      },
     );
   }
 
   goToStudentList() {
-    this.router.navigate(['/students']);
+    this.router.navigate(['/studentsList']);
   }
 
   onSubmit() {
+    console.log('on submit called');
     console.log(this.student);
     this.saveStudent();
   }

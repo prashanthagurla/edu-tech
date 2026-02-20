@@ -3,58 +3,82 @@ import { FormsModule } from '@angular/forms';
 import { Student } from '../../model/student';
 import { StudentService } from '../../service/student-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { catchError, Observable, of, switchMap } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-update-student',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './update-student.html',
   styleUrl: './update-student.css',
 })
 export class UpdateStudent implements OnInit {
-  student: Student = new Student();
+  student$!: Observable<Student | null>;
+  student!: Student;
   id: number = 0;
 
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
-  ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.studentService.getStudentById(this.id).subscribe({
-      next: (data) => {
-        console.log('Student fetched:', data);
+  ngOnInit() {
+    this.student$ = this.route.paramMap.pipe(
+      switchMap((params) => {
+        const id = Number(params.get('id'));
+        return this.studentService.getStudentById(id);
+      }),
+      catchError((err) => {
+        console.log(err);
+        this.router.navigate(['/studentsList']);
+        return of(null);
+      }),
+    );
+    this.student$.subscribe((data) => {
+      if (data) {
         this.student = data;
-      },
-      error: (err) => {
-        console.error('Error fetching student', err);
-      },
+      }
     });
   }
 
   onSubmit(): void {
+    console.log('hi');
     console.log('Submitting:', this.student);
     this.updateStudent();
   }
 
   updateStudent(): void {
-    this.studentService.updateStudent(this.id, this.student).subscribe({
+    this.studentService.updateStudent(this.student).subscribe({
       next: (data) => {
         console.log('Successfully updated', data);
-        this.goToStudentList();
+        Swal.fire({
+          icon: 'success',
+          title: 'Student Updated',
+          text: 'Student updated successfully!',
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          this.goToStudentList();
+        });
       },
       error: (err) => {
-        console.error(err);
-        alert('Student not updated. Check backend.');
+        console.error('failed to update student', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Upload failed',
+          text: err.error.message || 'Something went wrong',
+          timer: 2000,
+          showConfirmButton: false,
+        });
       },
     });
   }
 
   goToStudentList(): void {
-    this.router.navigate(['/students']);
+    this.router.navigate(['/studentsList']);
   }
 }
