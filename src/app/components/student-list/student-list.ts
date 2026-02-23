@@ -16,7 +16,7 @@ export class StudentList {
 
   students$ = this.studentService.getStudentsList();
 
-  updateStudent(id: number) {
+  onEdit(id: number) {
     this.router.navigate(['/update-student', id]);
   }
 

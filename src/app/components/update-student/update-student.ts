@@ -15,34 +15,48 @@ import Swal from 'sweetalert2';
   styleUrl: './update-student.css',
 })
 export class UpdateStudent implements OnInit {
-  student$!: Observable<Student | null>;
-  student!: Student;
+  student: Student = {} as Student;
+  // student: Student | null = null;
+  //  student$!: Observable<Student | null>;
+  // student!: Student;
   id: number = 0;
 
   constructor(
     private studentService: StudentService,
     private route: ActivatedRoute,
     private router: Router,
-    private cdr: ChangeDetectorRef,
   ) {}
 
-  ngOnInit() {
-    this.student$ = this.route.paramMap.pipe(
-      switchMap((params) => {
-        const id = Number(params.get('id'));
-        return this.studentService.getStudentById(id);
-      }),
-      catchError((err) => {
-        console.log(err);
-        this.router.navigate(['/studentsList']);
-        return of(null);
-      }),
-    );
-    this.student$.subscribe((data) => {
-      if (data) {
-        this.student = data;
-      }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      const id = Number(params.get('id'));
+      this.studentService.getStudentById(id).subscribe({
+        next: (data) => {
+          this.student = { ...data };
+        },
+        error: (err) => {
+          console.log('error occure', err.error.message);
+          this.router.navigate(['/studentsList']);
+        },
+      });
     });
+
+    // this.student$ = this.route.paramMap.pipe(
+    //   switchMap((params) => {
+    //     const id = Number(params.get('id'));
+    //     return this.studentService.getStudentById(id);
+    //   }),
+    //   catchError((err) => {
+    //     console.log(err);
+    //     this.router.navigate(['/studentsList']);
+    //     return of(null);
+    //   }),
+    // );
+    // this.student$.subscribe((data) => {
+    //   if (data) {
+    //     this.student = data;
+    //   }
+    // });
   }
 
   onSubmit(): void {
