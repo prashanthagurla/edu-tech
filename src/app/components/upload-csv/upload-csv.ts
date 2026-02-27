@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../../service/admin-service';
 import { error } from 'console';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-upload-csv',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './upload-csv.html',
   styleUrl: './upload-csv.css',
 })

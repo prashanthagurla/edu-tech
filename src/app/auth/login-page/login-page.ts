@@ -1,85 +1,52 @@
+import { Component, OnInit } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../service/auth-service';
-import { LoginModel } from '../../model/login-model';
-import { RouterLink } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [RouterLink, CommonModule, ReactiveFormsModule],
+  imports: [
+    MatCardModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
+    CommonModule,
+    MatInputModule,
+  ],
   templateUrl: './login-page.html',
   styleUrl: './login-page.css',
 })
-export class LoginPage {
-  errorMessage: string = '';
+export class LoginPage implements OnInit {
+  loginForm!: FormGroup;
+  hidePassword: boolean = true;
 
-  constructor(private authService: AuthService) {}
-
-  loginForm = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-  });
-
-  onSubmit() {
-    const loginRequest: LoginModel = {
-      email: this.loginForm.value.email!,
-      password: this.loginForm.value.password!,
-    };
-
-    this.authService.callLoginBackend(loginRequest).subscribe({
-      next: (response) => {
-        if (response.success) {
-          //TODO navigate to dashboard
-          console.log('success', response);
-        } else {
-          this.errorMessage = response.message;
-        }
-      },
-      error: (error) => {
-        this.errorMessage = error.error?.message || 'Login failed. Please try again.';
-      },
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+  ) {}
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
-
-    console.log(this.loginForm.value);
   }
-
-  get f() {
-    return this.loginForm.controls;
+  onSubmit() {
+    console.log(this.loginForm.value);
+    this.authService.login(this.loginForm.value);
   }
 }
-
-// constructor(private fb: FormBuilder) {
-//     // ✅ 2. Initialize loginForm
-//     this.loginForm = this.fb.group({
-//       email: ['', Validators.required],
-//     });
-//   }
-
-//-------------------Future Migration for this below code
-
-// loginState$: Observable<UiState> | null = null;
-
-// onSubmit() {
-//   const request = {
-//     email: this.loginForm.value.email!,
-//     password: this.loginForm.value.password!,
-//   };
-
-//   this.loginState$ = this.authService.callLoginBackend(request).pipe(
-//     map(() => ({
-//       loading: false,
-//       error: null,
-//       success: true,
-//     })),
-//     catchError(err =>
-//       of({
-//         loading: false,
-//         error: 'Invalid credentials',
-//         success: false,
-//       })
-//     ),
-//     startWith({ loading: true, error: null, success: false })
-//   );
-// }
