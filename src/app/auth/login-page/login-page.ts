@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-login-page',
@@ -46,7 +47,14 @@ export class LoginPage implements OnInit {
     });
   }
   onSubmit() {
-    console.log(this.loginForm.value);
-    this.authService.login(this.loginForm.value);
+    console.log('IN JS ', this.loginForm.value);
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        console.log('Login Success', res);
+      },
+      error: (err) => {
+        console.log('Login Failed', err);
+      },
+    });
   }
 }

@@ -1,4 +1,17 @@
-.signup-card {
+
+.signup-background{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.full-width{
   width: 100%;
-  max-width: 620px;  
+}
+.title{
+  text-align: center;
+}
+.signup-card{
+  margin: 5%;
+  padding: 5%;
 }

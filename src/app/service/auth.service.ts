@@ -7,9 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   constructor(private httpClient: HttpClient) {}
-  private url = 'http://localhost:3000/api/auth';
+  private url = 'http://localhost:3000/auth';
 
   login(loginRequest: FormData): Observable<any> {
+    console.log('in service', loginRequest);
     return this.httpClient.post<any>(`${this.url}/login`, loginRequest);
   }
 }

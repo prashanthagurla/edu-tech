@@ -21,4 +21,4 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, loginRequest);
   }
 }
-``;
+
