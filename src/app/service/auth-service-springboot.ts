@@ -8,7 +8,7 @@ import { AuthResponse } from '../model/auth-response';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthServiceSpringBoot {
   private baseUrl = 'http://localhost:8080/api/auth';
   constructor(private http: HttpClient) {}
   signup(request: SignUpRequest): Observable<any> {
@@ -21,4 +21,3 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, loginRequest);
   }
 }
-

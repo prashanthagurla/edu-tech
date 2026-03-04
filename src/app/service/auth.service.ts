@@ -13,4 +13,8 @@ export class AuthService {
     console.log('in service', loginRequest);
     return this.httpClient.post<any>(`${this.url}/login`, loginRequest);
   }
+  signUp(signUpRequest: FormData) {
+    console.log('in service', signUpRequest);
+    return this.httpClient.post<any>(`${this.url}/signUp`, signUpRequest);
+  }
 }
