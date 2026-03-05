@@ -45,6 +45,7 @@ export class SignUp implements OnInit {
       {
         fullName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
+        rollNumber: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
       },
@@ -68,12 +69,14 @@ export class SignUp implements OnInit {
     this.isLoading = true;
     this.authService.signUp(this.signUpForm.value).subscribe({
       next: (res) => {
-        console.log('success', res);
         this.isLoading = false;
+
+        console.log('success', res);
       },
       error: (err) => {
         console.log('failed', err);
         this.showToast(err);
+        this.isLoading = false;
       },
     });
   }
