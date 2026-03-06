@@ -32,4 +32,15 @@ body {
   display: flex;
   flex-direction: column;
 }
+.p-toast-message {
+  background: red !important;
+}
+/* .success-snackbar {
+  background-color: green !important;
+  color: white !important;
+}
 
+.error-snackbar {
+  background-color: red !important;
+  color: white !important;
+} */

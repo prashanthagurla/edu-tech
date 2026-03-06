@@ -8,8 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import e from 'express';
-
+import { ToastService } from '../../service/toast';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -27,7 +28,9 @@ import e from 'express';
     MatIconModule,
     MatInputModule,
     MatSnackBarModule,
+    ToastModule,
   ],
+  providers: [MessageService],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.css',
 })
@@ -39,6 +42,8 @@ export class SignUp implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private snackBar: MatSnackBar,
+    private toast: ToastService,
+    private messageService: MessageService,
   ) {}
   ngOnInit(): void {
     this.signUpForm = this.fb.group(
@@ -59,7 +64,6 @@ export class SignUp implements OnInit {
     if (this.signUpForm.invalid) {
       console.log('not vlaid');
       this.signUpForm.markAllAsTouched();
-      this.showToast('Please fill all fields correctly');
 
       return;
     }
@@ -70,13 +74,26 @@ export class SignUp implements OnInit {
     this.authService.signUp(this.signUpForm.value).subscribe({
       next: (res) => {
         this.isLoading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Signup Successful',
+          detail: 'User registered successfully',
+          life: 3000,
+        });
 
         console.log('success', res);
+        if (res.success == true) {
+        }
       },
       error: (err) => {
         console.log('failed', err);
-        this.showToast(err);
-        this.isLoading = false;
+        // this.toast.error('Signup Failed');
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Signup Failed',
+          detail: 'Something went wrong',
+          life: 3000,
+        });
       },
     });
   }
@@ -88,12 +105,5 @@ export class SignUp implements OnInit {
       return { passwordMismatch: true };
     }
     return null;
-  }
-  showToast(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-    });
   }
 }
