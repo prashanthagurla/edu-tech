@@ -4,7 +4,7 @@
   <div class="signUp-container">
     <mat-card class="signup-card">
       <h1 class="title">sign up</h1>
-      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <!-- fullName -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Full Name</mat-label>
@@ -16,7 +16,7 @@
           <input matInput formControlName="email" />
           <mat-icon matPrefix>email</mat-icon>
           <mat-error
-            *ngIf="signUpForm.controls['email'].touched && signUpForm.controls['email'].invalid"
+            *ngIf="signupForm.controls['email'].touched && signupForm.controls['email'].invalid"
           >
             Invalid Email
           </mat-error>
@@ -59,7 +59,7 @@
         </mat-form-field>
         <mat-error
           *ngIf="
-            signUpForm.errors?.['passwordMismatch'] && signUpForm.get('confirmPassword')?.touched
+            signupForm.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched
           "
         >
           Passwords do not match
@@ -69,7 +69,7 @@
           mat-raised-button
           color="primary"
           class="full-width"
-          [disabled]="signUpForm.invalid"
+          [disabled]="signupForm.invalid"
         >
           {{ isLoading ? 'Signing Up...' : 'Sign Up' }}
         </button>

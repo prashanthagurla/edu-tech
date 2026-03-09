@@ -11,6 +11,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToastService } from '../../service/toast';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -35,7 +36,7 @@ import { MessageService } from 'primeng/api';
   styleUrl: './sign-up.css',
 })
 export class SignUp implements OnInit {
-  signUpForm!: FormGroup;
+  signupForm!: FormGroup;
   hidePassword: boolean = true;
   isLoading: boolean = false;
   constructor(
@@ -44,9 +45,10 @@ export class SignUp implements OnInit {
     private snackBar: MatSnackBar,
     private toast: ToastService,
     private messageService: MessageService,
+    private router: Router,
   ) {}
   ngOnInit(): void {
-    this.signUpForm = this.fb.group(
+    this.signupForm = this.fb.group(
       {
         fullName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
@@ -61,28 +63,32 @@ export class SignUp implements OnInit {
   onSubmit() {
     console.log('signup clicked');
 
-    if (this.signUpForm.invalid) {
+    if (this.signupForm.invalid) {
       console.log('not vlaid');
-      this.signUpForm.markAllAsTouched();
+      this.signupForm.markAllAsTouched();
 
       return;
     }
-    console.log('valid', this.signUpForm.value);
-    console.log(this.signUpForm);
-    console.log(this.signUpForm.controls['email'].errors);
+    console.log('valid', this.signupForm.value);
+    console.log(this.signupForm);
+    console.log(this.signupForm.controls['email'].errors);
     this.isLoading = true;
-    this.authService.signUp(this.signUpForm.value).subscribe({
+    this.authService.signUp(this.signupForm.value).subscribe({
       next: (res) => {
-        this.isLoading = false;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Signup Successful',
-          detail: 'User registered successfully',
-          life: 3000,
-        });
-
         console.log('success', res);
         if (res.success == true) {
+          this.signupForm.reset();
+          this.isLoading = false;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Signup Successful',
+            detail: 'User registered successfully',
+            life: 3000,
+          });
+          this.signupForm.reset();
+          this.signupForm.markAsPristine();
+          this.signupForm.markAsUntouched();
+          this.router.navigate(['admin-dashboard']);
         }
       },
       error: (err) => {
