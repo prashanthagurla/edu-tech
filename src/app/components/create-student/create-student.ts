@@ -58,4 +58,34 @@ export class CreateStudent implements OnInit {
     console.log(this.student);
     this.saveStudent();
   }
+  countries = [
+    {
+      name: 'India',
+      states: [
+        {
+          name: 'Telangana',
+          districts: ['Hyderabad', 'Karimnagar', 'Warangal'],
+        },
+        {
+          name: 'Karnataka',
+          districts: ['Bangalore', 'Mysore', 'Mangalore'],
+        },
+      ],
+    },
+    {
+      name: 'USA',
+      states: [
+        {
+          name: 'california',
+          districts: ['Los Angles', 'San Diego'],
+        },
+        {
+          name: 'Texas',
+          districts: ['Houston', 'Dallas'],
+        },
+      ],
+    },
+  ];
+  states: any[] = [];
+  districts: any[] = [];
 }
