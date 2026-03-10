@@ -88,4 +88,9 @@ export class CreateStudent implements OnInit {
   ];
   states: any[] = [];
   districts: any[] = [];
+  onCountryChange() {
+    const selectedCountry = this.countries.find((c) => c.name === this.student.country);
+    this.states = selectedCountry ? selectedCountry.states : [];
+    this.districts = [];
+  }
 }

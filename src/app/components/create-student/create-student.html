@@ -100,31 +100,37 @@
       <div class="col-md-3 mb-3">
         <label>Country</label>
 
-        <select class="form-control" [(ngModel)]="student.country" name="country">
+        <select
+          class="form-control"
+          [(ngModel)]="student.country"
+          name="country"
+          (change)="onCountryChange()"
+        >
           <option value="">Select country</option>
-          <option value="">IND</option>
-          <option value="">CHINA</option>
-          <option value="">USA</option>
+          <option *ngFor="let country of countries" [value]="country.name">
+            {{ country.name }}
+          </option>
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <label>State</label>
 
-        <select class="form-control" [(ngModel)]="student.state" name="country">
+        <select
+          class="form-control"
+          [(ngModel)]="student.state"
+          name="state"
+          (change)="OnStateChange()"
+        >
           <option value="">Select state</option>
-          <option value="">IND</option>
-          <option value="">CHINA</option>
-          <option value="">USA</option>
+          <option *ngFor="let state of states" [value]="state.name">{{ state.name }}</option>
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <label>District</label>
 
-        <select class="form-control" [(ngModel)]="student.district" name="country">
+        <select class="form-control" [(ngModel)]="student.district" name="district">
           <option value="">Select district</option>
-          <option value="">IND</option>
-          <option value="">CHINA</option>
-          <option value="">USA</option>
+          <option *ngFor="let district of districts" [value]="districts">{{ district }}</option>
         </select>
       </div>
     </div>
