@@ -119,7 +119,7 @@
           class="form-control"
           [(ngModel)]="student.state"
           name="state"
-          (change)="OnStateChange()"
+          (change)="onStateChange()"
         >
           <option value="">Select state</option>
           <option *ngFor="let state of states" [value]="state.name">{{ state.name }}</option>

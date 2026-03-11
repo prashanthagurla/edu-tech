@@ -14,7 +14,8 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
-import { error } from 'console';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -39,6 +40,8 @@ export class LoginPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private messageService: MessageService,
+    private router: Router,
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -48,9 +51,25 @@ export class LoginPage implements OnInit {
   }
   onSubmit() {
     console.log('IN JS ', this.loginForm.value);
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
         console.log('Login Success', res);
+        if (res.success == true) {
+          localStorage.setItem('token', res.data.token);
+          this.loginForm.reset();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Login Successful',
+            detail: 'User Login Successful',
+            life: 3000,
+          });
+          this.router.navigate(['admin-dashboard']);
+        }
       },
       error: (err) => {
         console.log('Login Failed', err);
